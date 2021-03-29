@@ -55,10 +55,14 @@
       #message a {
         cursor: pointer;
       }
-      #load {
+      #credits {
         color: rgba(0, 0, 0, 0.4);
         text-align: center;
         font-size: 13px;
+      }
+
+      #credits a {
+        color: rgba(0, 0, 0, 0.6)
       }
       @media (max-width: 600px) {
         body,
@@ -102,6 +106,13 @@
       <a x-link-github onclick="copyUrl()"
         >Copy Link</a
       >
+      <div id="credits">
+        <br />
+        Username.ink by <a href="https://twitter.com/abeisgoat">Abe Haskins</a>. <br />Based on image
+        generation code by <a href="https://twitter.com/KilledByAPixel">Frank Force</a>
+        <br /><br />
+        Fork this project on <a href="https://github.com/abeisgoat/username.ink">Github</a>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/combine/npm/lodash@4.17.21"></script>

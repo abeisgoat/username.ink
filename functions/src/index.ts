@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import * as express from "express";
 import * as admin from "firebase-admin";
 import {generate} from "./sprite";
+import {createHash} from "crypto";
 
 admin.initializeApp({
     storageBucket: "username-ink",
@@ -10,7 +11,7 @@ admin.initializeApp({
 
 const app = express();
 app.get("/i/retro/:seed", (req, res) => {
-   const seed = req.params.seed;
+   const seed = createHash("md5").update(req.params.seed).digest("hex");
     const requestRef = admin.database().ref(`library/retro/${seed}`);
 
     console.log(`Requesting [retro] for seed: ${seed}`);

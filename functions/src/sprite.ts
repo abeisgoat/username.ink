@@ -51,7 +51,7 @@ export function generate(username: string) {
   ctx.fillStyle = "rgba(255, 255, 255, 1)";
   ctx.fillRect(0, 0, 200, 200);
 
-  draw(seed, 40, ctx, {x: 2, y: -1}, 0.4);
-  draw(seed, 10, ctx, {x: 9.5, y:5.5}, 1);
+  // draw(seed, 40, ctx, {x: 2, y: -1}, 0.4);
+  draw(seed, 10, ctx, {x: 9.5, y:4.5}, 1);
   return canvas;
 }
