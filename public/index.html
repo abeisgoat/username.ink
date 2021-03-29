@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Username.ink</title>
+
+    <style media="screen">
+      body {
+        background: #eceff1;
+        color: rgba(0, 0, 0, 0.87);
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      #message {
+        display: grid;
+        grid-gap: 10px;
+        background: white;
+        max-width: 360px;
+        margin: 100px auto 16px;
+        padding: 32px 24px;
+        border-radius: 3px;
+      }
+
+      #message > * {
+        margin: 0px;
+        padding: 0px;
+      }
+      #message h2 {
+        color: #ffa100;
+        font-weight: bold;
+        font-size: 16px;
+      }
+      #message h1 {
+        font-size: 22px;
+        font-weight: 300;
+        color: rgba(0, 0, 0, 0.6);
+      }
+      #message p {
+        line-height: 140%;
+        font-size: 14px;
+      }
+      #message [x-link-github] {
+        display: block;
+        text-align: center;
+        background: #039be5;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: white;
+        padding: 16px;
+        border-radius: 4px;
+      }
+
+      #message a {
+        cursor: pointer;
+      }
+      #load {
+        color: rgba(0, 0, 0, 0.4);
+        text-align: center;
+        font-size: 13px;
+      }
+      @media (max-width: 600px) {
+        body,
+        #message {
+          margin-top: 0;
+          background: white;
+          box-shadow: none;
+        }
+        body {
+          border-top: 16px solid #ffa100;
+        }
+      }
+
+      [x-image] {
+        justify-self: center;
+      }
+
+      #message [x-link] {
+        justify-self: center;
+        padding: 5px;
+        width: 200px;
+        height: 200px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="message">
+      <h2>Free, Instant Avatar Generator</h2>
+      <h1>Username.ink</h1>
+      <p>
+        Use our API to quickly generate retro placeholder or default avatars for your new users.
+      </p>
+      <p>
+        Try out any username!
+      </p>
+
+      <input x-seed type="text" placeholder="Type a username..." onkeyup="changeSeed()" />
+      <a x-link href="" target="_blank"><img x-image /></a>
+      <input x-url type="text" readonly />
+      <a x-link-github onclick="copyUrl()"
+        >Copy Link</a
+      >
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/lodash@4.17.21"></script>
+
+    <script>
+      const $el = {
+        seed: document.querySelector("[x-seed]"),
+        url: document.querySelector("[x-url]"),
+        link: document.querySelector("[x-link]"),
+        image: document.querySelector("[x-image]")
+      }
+      const host = `${document.location.protocol}//${document.location.hostname}${document.location.port ? ":" + document.location.port : ""}`;
+      let url;
+
+      $el.url.setAttribute("placeholder", `${host}/i/retro/{username}`)
+      $el.image.setAttribute("src", urlForSeed("example"));
+
+      function urlForSeed(seed) {
+        return seed ? `${host}/i/retro/${seed}` : "";
+      }
+
+      function changeSeed() {
+        const seed = $el.seed.value;
+        url = urlForSeed(seed);
+        $el.url.value = url;
+        $el.link.setAttribute("href", url);
+        console.log("Seed", seed);
+        changeImage();
+      }
+
+      function copyUrl() {
+        navigator.clipboard.writeText(url).then(() => {
+          alert("Copied!")
+        });
+      }
+
+      const changeImage = _.debounce(() => {
+        $el.image.setAttribute("src", url || urlForSeed("example"));
+      }, 300)
+
+    </script>
+  </body>
+</html>

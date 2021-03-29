@@ -1,0 +1,37 @@
+{
+  "rules": {
+    "hello": {
+      ".read": true
+    },
+    "push": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "users": {
+      "byUID": {
+        ".read": true,
+        ".indexOn": [
+          "username"
+        ],
+        "$uid": {
+          ".read": true
+        }
+      }
+    },
+    "schedule": {
+      "byUsername": {
+        "$username": {
+          "byTag": {
+            "public": {
+              ".indexOn": [
+                "timestamp"
+              ],
+              ".read": true,
+              ".write": "auth != null && root.child('users/byUID/' + auth.uid + '/username').val() == $username"
+            }
+          }
+        }
+      }
+    }
+  }
+}
